@@ -43,7 +43,7 @@
             <el-table-column label="手机号码" prop="mobile" align="center" header-align="center" />
             <el-table-column label="状态" prop="status" align="center" header-align="center">
               <template slot-scope="scope">
-                <el-switch v-model="scope.row.status === 1" @change="changeStatus(scope.row)" />
+                <el-switch :value="scope.row.status === 1" @change="changeStatus(scope.row)" />
               </template>
             </el-table-column>
             <el-table-column label="创建时间" prop="createTime" align="center" header-align="center" width="160px" />
