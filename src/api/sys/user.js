@@ -12,6 +12,42 @@ export default {
       method: 'get',
       params
     })
+  },
+
+  /**
+   * 改变用户状态
+   * @param {*} data 用户 id 和用户状态
+   * @returns 
+   */
+  changeUserStatus(data) {
+    return request({
+      url: '/admin/user/status',
+      method: 'post',
+      data
+    })
+  },
+
+  addUser(data) {
+    return request({
+      url: '/admin/user/add',
+      method: 'post',
+      data
+    })
+  },
+
+  updateUser(data) {
+    return request({
+      url: '/admin/user/update',
+      method: 'put',
+      data
+    })
+  },
+
+  getUserInfo(userId) {
+    return request({
+      url: `/admin/user/userinfo/${userId}`,
+      method: 'get'
+    })
   }
 }
 
