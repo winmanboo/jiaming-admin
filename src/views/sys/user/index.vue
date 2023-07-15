@@ -272,6 +272,7 @@ export default {
           this.assignForm.userId = res.id
           this.assignForm.username = res.username
           this.assignForm.nickname = res.nickname
+          this.assignForm.roleList = res.roleIds
         })
         roleApi.fetchRoleList().then(res => {
           this.roleList = res
