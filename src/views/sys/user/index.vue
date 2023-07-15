@@ -284,6 +284,7 @@ export default {
         roleIds: this.assignForm.roleList
       }).then(res => {
         this.$message.success('分配成功')
+        this.assignDialogVisible = false
       })
     }
   }
