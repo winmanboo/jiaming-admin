@@ -68,12 +68,33 @@
       </el-col>
     </el-row>
     <add-or-update ref="addOrUpdate" v-if="addOrUpdateVisible" @refreshDataList="resetSearch()" />
+
+    <el-dialog title="分配角色" :visible.sync="assignDialogVisible">
+      <el-form :model="assignForm" label-width="80px">
+        <el-form-item label="用户名称">
+          <el-input v-model="assignForm.username" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="用户昵称">
+          <el-input v-model="assignForm.nickname" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="角色">
+          <el-select v-model="assignForm.roleList" placeholder="请选择角色" multiple>
+            <el-option v-for="item in roleList" :label="item.name" :value="item.id" :key="item.id"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="assignDialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="assignRole()">确定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import deptApi from '@/api/sys/dept'
 import userApi from '@/api/sys/user'
+import roleApi from '@/api/sys/role'
 import Pagination from '@/components/Pagination'
 import AddOrUpdate from './add-or-update.vue'
 
@@ -96,7 +117,15 @@ export default {
         page: 1,
         size: 10
       },
-      addOrUpdateVisible: false
+      addOrUpdateVisible: false,
+      assignForm: {
+        userId: undefined,
+        username: undefined,
+        nickname: undefined,
+        roleList: []
+      },
+      roleList: [],
+      assignDialogVisible: false
     }
   },
   components: {
@@ -234,8 +263,28 @@ export default {
             })
         })
       } else if (cmd === 'assign') {
-
+        this.assignForm.userId = undefined
+        this.assignForm.username = undefined
+        this.assignForm.nickname = undefined
+        this.roleList = []
+        this.assignDialogVisible = true
+        userApi.getUserInfo(userId).then(res => {
+          this.assignForm.userId = res.id
+          this.assignForm.username = res.username
+          this.assignForm.nickname = res.nickname
+        })
+        roleApi.fetchRoleList().then(res => {
+          this.roleList = res
+        })
       }
+    },
+    assignRole() {
+      roleApi.assign({
+        userId: this.assignForm.userId,
+        roleIds: this.assignForm.roleList
+      }).then(res => {
+        this.$message.success('分配成功')
+      })
     }
   }
 }

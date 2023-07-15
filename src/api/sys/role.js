@@ -37,5 +37,20 @@ export default {
       url: `/admin/role/remove/${roleId}`,
       method: 'delete'
     })
+  },
+
+  fetchRoleList() {
+    return request({
+      url: '/admin/role/list', 
+      method: 'get'
+    })
+  },
+
+  assign(data) {
+    return request({
+      url: '/admin/role/assign',
+      method: 'post',
+      data
+    })
   }
 }
