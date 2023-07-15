@@ -50,7 +50,15 @@
             <el-table-column label="操作">
               <template slot-scope="scope">
                 <el-button type="text" @click="addOrUpdate(scope.row.id)">修改</el-button>
-                <el-button type="text">更多</el-button>
+                <el-dropdown style="margin-left: 10px;" @command="handleCommand">
+                  <el-button type="text">更多</el-button>
+                  <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item icon="el-icon-delete" :command="`delete,${scope.row.id}`">删除</el-dropdown-item>
+                    <el-dropdown-item icon="el-icon-lollipop" :command="`reset,${scope.row.id}`">重置密码</el-dropdown-item>
+                    <el-dropdown-item icon="el-icon-circle-check"
+                      :command="`assign,${scope.row.id}`">分配角色</el-dropdown-item>
+                  </el-dropdown-menu>
+                </el-dropdown>
               </template>
             </el-table-column>
           </el-table>
@@ -196,6 +204,38 @@ export default {
       this.userForm.deptId = dept.id
       this.userLoading = true
       this.fetchUserPageList()
+    },
+    handleCommand(command) {
+      const commandArray = command.split(',')
+      const cmd = commandArray[0]
+      const userId = commandArray[1]
+
+      if (cmd === 'delete') {
+        this.$alert('确定要删除该用户？', '系统提示', {
+          confirmButtonText: '确定',
+          callback: action => {
+            userApi.deleteUser(userId).then(res => {
+              this.$message.success('删除成功')
+              this.resetSearch()
+            })
+          }
+        })
+      } else if (cmd === 'reset') {
+        this.$prompt('请输入密码', '系统提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+        }).then(({ value }) => {
+          userApi.resetPassword({ id: userId, password: value })
+            .then(res => {
+              this.$message({
+                type: 'success',
+                message: '重置成功'
+              });
+            })
+        })
+      } else if (cmd === 'assign') {
+
+      }
     }
   }
 }

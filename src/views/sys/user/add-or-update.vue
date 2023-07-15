@@ -75,9 +75,7 @@ export default {
   },
   methods: {
     init(userId) {
-      console.log(userId);
       this.dataForm.userId = userId === undefined ? null : userId
-      console.log(this.dataForm.userId);
       this.visible = true
       this.$nextTick(() => {
         this.$refs['dataForm'].resetFields()

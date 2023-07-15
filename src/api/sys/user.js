@@ -48,6 +48,21 @@ export default {
       url: `/admin/user/userinfo/${userId}`,
       method: 'get'
     })
+  },
+
+  deleteUser(userId) {
+    return request({
+      url: `/admin/user/remove/${userId}`,
+      method: 'delete'
+    })
+  },
+
+  resetPassword(data) {
+    return request({
+      url: '/admin/user/reset',
+      method: 'put',
+      data
+    })
   }
 }
 
