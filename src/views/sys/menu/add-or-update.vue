@@ -1,6 +1,6 @@
 <template>
   <el-dialog :title="dataForm.menuId === undefined ? '新增' : '修改'" :visible.sync="visible">
-    <el-form :model="dataForm" label-width="80px">
+    <el-form :model="dataForm" label-width="80px" ref="dataForm">
       <el-form-item label="上级菜单">
         <el-select v-model="menuName" placeholder="请选择">
           <el-option :value="menuTree" style="height: auto;">
@@ -76,11 +76,12 @@ export default {
       },
       menuType: 0, // 菜单类型 0：目录 1：菜单 2：按钮
       menuTree: [],
-      menuName: undefined
+      menuName: undefined,
+      submitType: undefined, // 0：修改 1：新增
     }
   },
   methods: {
-    init(menuId, parentId, menuName) {
+    init(menuId, parentId, menuName, type) {
       // reset data
       this.dataForm = {
         menuId: undefined,
@@ -95,6 +96,8 @@ export default {
         permission: undefined, // 权限标识
       }
       this.menuName = menuName
+
+      this.submitType = type
 
       this.dataForm.menuId = menuId
       this.visible = true
@@ -121,7 +124,7 @@ export default {
       })
     },
     dataSubmit() {
-      const request = this.dataForm.menuId === undefined ? api.addMenu({
+      const request = this.submitType === 1 ? api.addMenu({
         ...this.dataForm, hidden: this.dataForm.hidden ? 1 : 0, alwaysShow: this.dataForm.alwaysShow ? 1 : 0
       }) :
         api.updateMenu({ ...this.dataForm, id: this.dataForm.menuId, hidden: this.dataForm.hidden ? 1 : 0, alwaysShow: this.dataForm.alwaysShow ? 1 : 0 })

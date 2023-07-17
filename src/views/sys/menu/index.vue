@@ -13,7 +13,7 @@
         </el-form-item>
         <el-button icon="el-icon-search" @click="searchMenu()">搜索</el-button>
         <el-button icon="el-icon-refresh" @click="resetSearch()">重置</el-button>
-        <el-button icon="el-icon-plus" type="primary" @click="addOrUpdate()">新增</el-button>
+        <el-button icon="el-icon-plus" type="primary" @click="addOrUpdate(undefined, undefined, undefined, 1)">新增</el-button>
       </el-form>
     </el-card>
 
@@ -32,8 +32,8 @@
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button type="text" @click="addOrUpdate(scope.row.id)">修改</el-button>
-            <el-button type="text" @click="addOrUpdate(scope.row.id, scope.row.parentId, scope.row.name)">新增</el-button>
+            <el-button type="text" @click="addOrUpdate(scope.row.id, scope.row.parentId, scope.row.name, 0)">修改</el-button>
+            <el-button type="text" @click="addOrUpdate(scope.row.id, undefined, undefined, 1)">新增</el-button>
             <el-button type="text" style="color: red;" @click="handleRemoveMenu(scope.row.id)">删除</el-button>
           </template>
         </el-table-column>
@@ -82,10 +82,10 @@ export default {
       this.menuLoading = true
       this.fetchMenuList()
     },
-    addOrUpdate(menuId) {
+    addOrUpdate(menuId, parentId, menuName, type) {
       this.addOrUpdateVisible = true
       this.$nextTick(() => {
-        this.$refs['addOrUpdate'].init(menuId)
+        this.$refs['addOrUpdate'].init(menuId, parentId, menuName, type)
       })
     },
     handleRemoveMenu(menuId) {
