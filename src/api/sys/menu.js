@@ -37,5 +37,20 @@ export default {
       url: `/admin/menu/remove/${menuId}`,
       method: 'delete'
     })
+  },
+
+  assignMenuIdList(roleId) {
+    return request({
+      url: `/admin/menu/assign_list/${roleId}`,
+      method: 'get'
+    })
+  },
+
+  assignMenu(data) {
+    return request({
+      url: '/admin/menu/assign_menu',
+      method: 'post',
+      data
+    })
   }
 }

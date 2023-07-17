@@ -41,7 +41,7 @@
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button type="text" @click="addOrUpdate(scope.row.id)">修改</el-button>
-            <el-button type="text">菜单权限</el-button>
+            <el-button type="text" @click="menuPermission(scope.row)">菜单权限</el-button>
             <el-button type="text" style="color: red;" @click="handleRemoveRole(scope.row.id)">删除</el-button>
           </template>
         </el-table-column>
@@ -50,11 +50,13 @@
         @pagination="fetchRolePageList" />
     </el-card>
     <add-or-update ref="addOrUpdate" v-if="addOrUpdateVisible" @refreshDataList="resetSearch()" />
+    <menu-permission ref="menuPermission" v-if="menuPermissionVisible" />
   </div>
 </template>
 <script>
 import Pagination from '@/components/Pagination'
 import AddOrUpdate from './add-or-update.vue'
+import MenuPermission from './menu-permission.vue'
 import roleApi from '@/api/sys/role'
 
 export default {
@@ -73,12 +75,14 @@ export default {
         page: 1,
         size: 10
       },
-      addOrUpdateVisible: false
+      addOrUpdateVisible: false,
+      menuPermissionVisible: false
     }
   },
   components: {
     Pagination,
-    AddOrUpdate
+    AddOrUpdate,
+    MenuPermission
   },
   created() {
     this.fetchRolePageList()
@@ -131,6 +135,12 @@ export default {
             this.resetSearch()
           })
         }
+      })
+    },
+    menuPermission(role) {
+      this.menuPermissionVisible = true
+      this.$nextTick(() => {
+        this.$refs.menuPermission.init(role)
       })
     }
   }
