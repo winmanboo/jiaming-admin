@@ -125,9 +125,9 @@ export default {
     },
     dataSubmit() {
       const request = this.submitType === 1 ? api.addMenu({
-        ...this.dataForm, hidden: this.dataForm.hidden ? 1 : 0, alwaysShow: this.dataForm.alwaysShow ? 1 : 0
+        ...this.dataForm, hidden: this.dataForm.hidden ? 1 : 0, alwaysShow: this.dataForm.alwaysShow ? 1 : 0, type: this.menuType
       }) :
-        api.updateMenu({ ...this.dataForm, id: this.dataForm.menuId, hidden: this.dataForm.hidden ? 1 : 0, alwaysShow: this.dataForm.alwaysShow ? 1 : 0 })
+        api.updateMenu({ ...this.dataForm, id: this.dataForm.menuId, hidden: this.dataForm.hidden ? 1 : 0, alwaysShow: this.dataForm.alwaysShow ? 1 : 0, type: this.menuType })
       request.then(res => {
         this.$message({
           message: '操作成功',
@@ -147,7 +147,7 @@ export default {
         console.log(res);
         this.menuType = res.type
         this.menuName = res.parentId === 0 ? '主类目' : res.name
-        this.dataForm.parentId = res.parentId
+        this.dataForm.parentId = res.id
         this.dataForm.name = res.name
         this.dataForm.icon = res.icon
         this.dataForm.path = res.path
