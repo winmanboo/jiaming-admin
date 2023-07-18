@@ -98,7 +98,6 @@ export default {
       })
     },
     dataSubmit() {
-      console.log(this.dataForm)
       const request = this.dataForm.id === undefined ? deptApi.addDept(this.dataForm) : deptApi.updateDept(this.dataForm)
       request.then(res => {
         this.$message({

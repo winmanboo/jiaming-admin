@@ -34,6 +34,13 @@ export default {
       method: 'put',
       data
     })
+  },
+
+  removeDept(deptId) {
+    return request({
+      url: `/admin/dept/remove/${deptId}`,
+      method: 'delete'
+    })
   }
 }
 

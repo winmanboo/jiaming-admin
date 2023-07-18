@@ -30,7 +30,7 @@
         <el-table-column label="操作" align="center" header-align="center">
           <template slot-scope="scope">
             <el-button type="text" @click="addOrUpdate(scope.row.id)">修改</el-button>
-            <el-button type="text" style="color: red;">删除</el-button>
+            <el-button type="text" style="color: red;" @click="handleRemoveDept(scope.row.id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -84,6 +84,17 @@ export default {
       this.$refs.deptForm.resetFields()
       this.loading = true
       this.fetchDeptTree()
+    },
+    handleRemoveDept(deptId) {
+      this.$alert('确定要删除该部门？', '系统提示', {
+        confirmButtonText: '确定',
+        callback: action => {
+          api.removeDept(deptId).then(res => {
+            this.$message.success('删除成功')
+            this.resetSearch()
+          })
+        }
+      })
     }
   },
 
