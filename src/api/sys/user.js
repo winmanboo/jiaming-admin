@@ -63,6 +63,13 @@ export default {
       method: 'put',
       data
     })
+  },
+
+  leaderList() {
+    return request({
+      url: '/admin/user/leader_list',
+      method: 'get'
+    })
   }
 }
 
