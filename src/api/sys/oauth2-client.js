@@ -3,7 +3,7 @@ import request from '@/utils/request'
 export default {
   clientPageList(params) {
     return request({
-      url: '/uaa/client/page',
+      url: '/uaa/oauth2-client/page',
       method: 'get',
       params
     })
@@ -11,14 +11,14 @@ export default {
 
   getClientInfo(id) {
     return request({
-      url: `/uaa/client/info/${id}`,
+      url: `/uaa/oauth2-client/info/${id}`,
       method: 'get'
     })
   },
 
   registerClient(data) {
     return request({
-      url: '/uaa/client/register',
+      url: '/uaa/oauth2-client/register',
       method: 'post',
       data
     })
@@ -26,7 +26,7 @@ export default {
   
   updateClient(data) {
     return request({
-      url: '/uaa/client/update', 
+      url: '/uaa/oauth2-client/update', 
       method: 'put',
       data
     })
