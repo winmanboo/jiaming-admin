@@ -1,6 +1,7 @@
 import { asyncRoutes, constantRoutes } from '@/router'
 import { routes } from '@/api/menu/routes'
 import Layout from '@/layout'
+import ParentView from '@/parent-view'
 
 /**
  * Use meta.role to determine if the current user has permission
@@ -59,7 +60,11 @@ const mutations = {
 function loadChild(route) {
   if (route.children.length > 0) {
     for (const child of route.children) {
-      child.component = loadView(child.component)
+      if (child.component === 'ParentView') {
+        child.component = ParentView
+      } else {
+        child.component = loadView(child.component)
+      }
       loadChild(child)
     }
   }
