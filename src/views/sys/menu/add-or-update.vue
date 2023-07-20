@@ -38,8 +38,8 @@
       </el-form-item>
       <el-form-item label="显示状态" v-if="menuType !== 2">
         <el-radio-group v-model="dataForm.hidden">
-          <el-radio :label="true">显示</el-radio>
-          <el-radio :label="false">隐藏</el-radio>
+          <el-radio :label="false">显示</el-radio>
+          <el-radio :label="true">隐藏</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="总是显示" v-if="menuType !== 2">
