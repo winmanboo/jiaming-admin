@@ -9,9 +9,9 @@ export default {
     })
   },
 
-  removeToken(authorizationId) {
+  removeToken(token) {
     return request({
-      url: `/uaa/oauth2-token/remove/${authorizationId}`,
+      url: `/uaa/oauth2-token/remove/${token}`,
       method: 'delete'
     })
   }

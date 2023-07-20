@@ -43,7 +43,8 @@ const actions = {
         .then(response => {
           commit('SET_TOKEN', response.access_token)
           commit('SET_REFRESH_TOKEN', response.refresh_token)
-          setToken(`${response.token_type} ${response.access_token}`)
+          // setToken(`${response.token_type} ${response.access_token}`)
+          setToken(response.access_token)
           resolve()
         }).catch(error => {
           console.log(error);

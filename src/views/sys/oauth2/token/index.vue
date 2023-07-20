@@ -11,7 +11,7 @@
     </el-card>
     <el-card>
       <el-table :data="tokenList">
-        <el-table-column label="访问令牌" prop="accessTokenValue" show-overflow-tooltip align="center"
+        <el-table-column label="访问令牌" prop="token" align="center"
           header-align="center"></el-table-column>
         <el-table-column label="刷新令牌" prop="refreshTokenValue" show-overflow-tooltip align="center"
           header-align="center"></el-table-column>
@@ -81,7 +81,7 @@ export default {
       this.$alert('确定要强退该令牌？', '系统提示', {
         confirmButtonText: '确定',
         callback: action => {
-          api.removeToken(row.id).then(res => {
+          api.removeToken(row.token).then(res => {
             this.$message.success('强退成功')
             this.resetSearch()
           })
